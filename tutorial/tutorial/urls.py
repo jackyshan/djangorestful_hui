@@ -27,6 +27,8 @@ router.register(r'zixuns', views.ZixunViewSet)
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
     url(r'^index$', views.index),
+    url(r'^picture_add$', views.picture_add, name='picture_add'),
+    url(r'^picture_list$', views.picture_list, name='picture_list'),
     url(r'^artical_list$', views.artical_list, name='artical_list'),
     url(r'^article_add$', views.article_add, name='article_add'),
     url(r'^welcome$', views.welcome, name='welcome'),

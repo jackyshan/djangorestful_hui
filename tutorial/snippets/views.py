@@ -19,6 +19,11 @@ def article_add(request):
         print request.POST['articletitle']
         return HttpResponse('ok')
     return render(request, 'article-add.html')
+def picture_list(request):
+    return render(request, 'picture-list.html')
+def picture_add(request):
+    return render(request, 'picture-add.html')
+    
 #---------------------------下面是接口---------------------------
 from django.contrib.auth.models import User
 from rest_framework import permissions

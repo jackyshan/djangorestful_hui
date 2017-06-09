@@ -184,6 +184,7 @@ function article_save_submit() {
  //    },function(data,status){
  //        alert("数据: \n" + data + "\n状态: " + status);
  //    });
+ 	// 使用restful的api进行post
  	$.post("/api/zixuns/",
     {
 	    "title": $("#articletitle").val(),

@@ -31,6 +31,7 @@
 <body>
 <article class="page-container">
 	<form class="form form-horizontal" id="form-article-add" method="post">
+		{% csrf_token %}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -174,15 +175,27 @@ function article_save_submit() {
 
 	// $.post("/article_add",
  //    {
-	// 	title = $("#articletitle").val(),
-	// 	category = $("#selectcategory").val(),
-	// 	source = $("#sources").val(),
-	// 	update_time = $("#commentdatemin").val(),
-	// 	see_times = 0,
-	// 	publish_status = 0
+		// title = $("#articletitle").val(),
+		// category = $("#selectcategory").val(),
+		// source = $("#sources").val(),
+		// update_time = $("#commentdatemin").val(),
+		// see_times = 0,
+		// publish_status = 0
  //    },function(data,status){
  //        alert("数据: \n" + data + "\n状态: " + status);
  //    });
+ 	$.post("/api/zixuns/",
+    {
+	    "title": $("#articletitle").val(),
+	    "category": $("#selectcategory").val(),
+	    "source": $("#sources").val(),
+	    "update_time": $("#commentdatemin").val(),
+	    "see_times": 0,
+	    "publish_status": null
+	},
+	function(data,status) {
+        alert("数据: \n" + data + "\n状态: " + status);
+    });
 }
 
 $(function(){

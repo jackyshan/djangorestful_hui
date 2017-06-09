@@ -4,14 +4,20 @@ from __future__ import unicode_literals
 #------------------------下面是django模板---------------------------
 from django.shortcuts import render
 from snippets.models import Zixun
+from django.http import HttpResponse
 def index(request):
     return render(request, 'index.html')
 def welcome(request):
+    print '/welcome调用'
     return render(request, 'welcome.html')
 def artical_list(request):
     queryset = Zixun.objects.all()
     return render(request, 'article-list.html', {'zixuns': queryset})
 def article_add(request):
+    if request.method == 'POST':
+        print 'post----->>>'
+        print request.POST['articletitle']
+        return HttpResponse('ok')
     return render(request, 'article-add.html')
 #---------------------------下面是接口---------------------------
 from django.contrib.auth.models import User

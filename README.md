@@ -1,7 +1,7 @@
 # djangorestful_hui
 djangorestful结合hui框架搭建后台管理系统和后台接口
 
-#执行顺序
+# 执行顺序
 
 虚拟环境
 virtualenv env

@@ -24,24 +24,25 @@
 </head>
 <body>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add">
+	<form class="form form-horizontal" id="form-article-add" method="post">
+		{% csrf_token %}
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片标题：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="" placeholder="" id="picturetitle" name="picturetitle">
 			</div>
 		</div>
-		<div class="row cl">
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">简略标题：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="" placeholder="" id="" name="">
 			</div>
-		</div>
+		</div> -->
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+			<label class="form-label col-xs-4 col-sm-2">分类栏目：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
-				<select name="" class="select">
+				<select name="" class="select" id="selectcategory">
 					<option value="0">全部栏目</option>
 					<option value="1">新闻资讯</option>
 					<option value="11">├行业动态</option>
@@ -51,17 +52,17 @@
 				</span>
 			</div>
 		</div>
-		<div class="row cl">
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
 			</div>
-		</div>
+		</div> -->
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">允许评论：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="check-box">
-					<input type="checkbox" id="checkbox-1">
+					<input type="checkbox" id="isComment" checked="checked">
 					<label for="checkbox-1">&nbsp;</label>
 				</div>
 			</div>
@@ -69,16 +70,16 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate">
+				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate" name="datemin">
 			</div>
 		</div>
-		<div class="row cl">
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结束日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}' })" id="datemax" class="input-text Wdate">
 			</div>
-		</div>
-		<div class="row cl">
+		</div> -->
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">图片作者：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
@@ -89,21 +90,21 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
 			</div>
-		</div>
-		<div class="row cl">
+		</div> -->
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">关键词：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input-text" value="0" placeholder="" id="" name="">
 			</div>
-		</div>
+		</div> -->
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">图片摘要：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)"></textarea>
+				<textarea name="" id="content" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)"></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
 			</div>
 		</div>
-		<div class="row cl">
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-thum-container">
@@ -112,9 +113,9 @@
 					<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">图片上传：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片上传：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-list-container"> 
 					<div class="queueList">
@@ -136,8 +137,8 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
-				<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+				<!-- <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button> -->
 				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
@@ -148,10 +149,12 @@
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="static/lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="static/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script> 
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="static/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 <script type="text/javascript" src="static/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="static/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
@@ -162,7 +165,68 @@ function article_save(){
 	window.parent.location.reload();
 }
 
+$("#datemin").datetimepicker('setDate', new Date());
+
+var plist = new Array()
+
 $(function(){
+	//表单验证
+	$("#form-article-add").validate({
+		rules:{
+			picturetitle:{
+				required:true,
+			},			
+			datemin:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			 if(plist.length == 0) {
+			 	alert('至少上传一张图片');
+			 	return
+			 }
+
+			 // 使用restful的api进行post
+			var csrftoken = $.cookie('csrftoken');
+
+			function csrfSafeMethod(method) {
+			    // these HTTP methods do not require CSRF protection
+			    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+			}
+
+			$.ajaxSetup({
+			    beforeSend: function(xhr, settings) {
+			        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+			            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			        }
+			    }
+			});
+
+		 	$.post("/api/pictures/",
+		    {
+			    "title": $("#picturetitle").val(),
+			    "category": $("#selectcategory").val(),
+			    "isComment": $("#isComment").val(),
+			    "publish_time": $("#datemin").val(),
+			    "content": $("#content").val(),
+			    "picture_list": plist.toString(),
+			},
+			function(data,status) {
+		        alert("数据: \n" + data + "\n状态: " + status);
+		    });
+			// $(form).ajaxSubmit();
+			// var index = parent.layer.getFrameIndex(window.name);
+			// parent.$('.btn-refresh').click();
+			// parent.layer.close(index);
+			parent.location.reload()
+			// console.log(parent.location)
+			// removeIframe();
+		}
+	});
+
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
@@ -176,10 +240,10 @@ $(function(){
 
 	var uploader = WebUploader.create({
 		auto: true,
-		swf: 'lib/webuploader/0.1.5/Uploader.swf',
+		swf: 'static/lib/webuploader/0.1.5/Uploader.swf',
 	
 		// 文件接收服务端。
-		server: 'lib/webuploader/0.1.5/server/fileupload.php',
+		server: 'static/lib/webuploader/0.1.5/server/fileupload.php',
 	
 		// 选择文件的按钮。可选。
 		// 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -231,7 +295,7 @@ $(function(){
 	});
 	
 	// 文件上传成功，给item添加成功class, 用样式标记上传成功。
-	uploader.on( 'uploadSuccess', function( file ) {
+	uploader.on( 'uploadSuccess', function( file, response ) {
 		$( '#'+file.id ).addClass('upload-state-success').find(".state").text("已上传");
 	});
 	
@@ -416,14 +480,16 @@ $(function(){
                 label: '点击选择图片'
             },
             formData: {
-                uid: 123
+                uid: 123,
             },
             dnd: '#dndArea',
             paste: '#uploader',
-            swf: 'lib/webuploader/0.1.5/Uploader.swf',
+            swf: 'static/lib/webuploader/0.1.5/Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            server: 'lib/webuploader/0.1.5/server/fileupload.php',
+            // server: 'static/lib/webuploader/0.1.5/server/fileupload.php',
+            server: '/upload_file',
+
             // runtimeOrder: 'flash',
 
             // accept: {
@@ -438,6 +504,12 @@ $(function(){
             fileSizeLimit: 200 * 1024 * 1024,    // 200 M
             fileSingleSizeLimit: 50 * 1024 * 1024    // 50 M
         });
+        var csrftoken = $.cookie('csrftoken');
+        uploader.on('uploadBeforeSend', function(obj, data, headers) {
+		    $.extend(headers, {
+		    	"X-CSRFToken": csrftoken,
+			});
+		});
 
         // 拖拽时不接受 js, txt 文件。
         uploader.on( 'dndAccept', function( items ) {
@@ -533,7 +605,7 @@ $(function(){
                         img = $('<img src="'+src+'">');
                         $wrap.empty().append( img );
                     } else {
-                        $.ajax('lib/webuploader/0.1.5/server/preview.php', {
+                        $.ajax('static/lib/webuploader/0.1.5/server/preview.php', {
                             method: 'POST',
                             data: src,
                             dataType:'json'
@@ -731,6 +803,7 @@ $(function(){
                 case 'finish':
                     stats = uploader.getStats();
                     if ( stats.successNum ) {
+                    	console.log(uploader)
                         alert( '上传成功' );
                     } else {
                         // 没有成功的图片，重设
@@ -778,6 +851,14 @@ $(function(){
             updateTotalProgress();
 
         };
+
+        uploader.onUploadSuccess = function( file, response ) {
+        	console.log('返回----->')
+        	console.log(response)
+        	plist.push(response['_raw'])
+        	console.log(plist)
+        }
+
 
         uploader.on( 'all', function( type ) {
             var stats;

@@ -185,6 +185,20 @@ function article_save_submit() {
  //        alert("数据: \n" + data + "\n状态: " + status);
  //    });
  	// 使用restful的api进行post
+	var csrftoken = $.cookie('csrftoken');
+
+	function csrfSafeMethod(method) {
+	    // these HTTP methods do not require CSRF protection
+	    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	}
+
+	$.ajaxSetup({
+	    beforeSend: function(xhr, settings) {
+	        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+	            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	        }
+	    }
+	});
  	$.post("/api/zixuns/",
     {
 	    "title": $("#articletitle").val(),
@@ -192,11 +206,42 @@ function article_save_submit() {
 	    "source": $("#sources").val(),
 	    "update_time": $("#commentdatemin").val(),
 	    "see_times": 0,
-	    "publish_status": null
+	    "publish_status": 1
 	},
 	function(data,status) {
         alert("数据: \n" + data + "\n状态: " + status);
     });
+
+	// var csrftoken = $.cookie('csrftoken');
+
+	// function csrfSafeMethod(method) {
+	//     // these HTTP methods do not require CSRF protection
+	//     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	// }
+
+	// $.ajaxSetup({
+	//     beforeSend: function(xhr, settings) {
+	//         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+	//             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	//         }
+	//     }
+	// });
+// 
+ //    $.ajax({
+	//  url:"/api/zixuns/",
+	//  type:"POST",
+	//  data:JSON.stringify({
+	//     "title": $("#articletitle").val(),
+	//     "category": $("#selectcategory").val(),
+	//     "source": $("#sources").val(),
+	//     "update_time": $("#commentdatemin").val(),
+	//     "see_times": 0,
+	//     "publish_status": 1
+	// }),
+	//  contentType:"application/json; charset=utf-8",
+	//  dataType:"json",
+	//  success: function(){
+	//  }})
 }
 
 $(function(){
@@ -251,13 +296,13 @@ $(function(){
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-			$(form).ajaxSubmit();
+			// $(form).ajaxSubmit();
 			// var index = parent.layer.getFrameIndex(window.name);
 			// parent.$('.btn-refresh').click();
 			// parent.layer.close(index);
 			// parent.location.reload()
 			// console.log(parent.location)
-			removeIframe();
+			// removeIframe();
 		}
 	});
 	

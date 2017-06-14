@@ -3,8 +3,14 @@ from __future__ import unicode_literals
 
 #------------------------下面是django模板---------------------------
 from django.shortcuts import render
-from snippets.models import Zixun
+from snippets.models import Zixun, Picture
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+import os,time
+
+@login_required(login_url='/login')
 def index(request):
     return render(request, 'index.html')
 def welcome(request):
@@ -20,10 +26,55 @@ def article_add(request):
         return HttpResponse('ok')
     return render(request, 'article-add.html')
 def picture_list(request):
-    return render(request, 'picture-list.html')
+    queryset = Picture.objects.all()
+    return render(request, 'picture-list.html', {'pictures': queryset})
 def picture_add(request):
     return render(request, 'picture-add.html')
-    
+def picture_show(request):
+    return render(request, 'picture-show.html')
+
+def login_index(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    print request.POST
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+            return render(request, 'index.html')
+        else:
+            print 'disabled account'
+            return render(request, 'login.html', {'errmsg': 'disabled account'})
+            # Return a 'disabled account' error message
+    else:
+        print 'invalid login'
+        return render(request, 'login.html', {'errmsg': 'invalid login'})
+        # Return an 'invalid login' error message.
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+    print '退出登录'
+    return render(request, 'login.html')
+
+def handle_uploaded_file(f):
+    path = 'static/upload/'+time.strftime("%Y%m%d%H%m%s", time.localtime())+f.name
+    # path = os.path.join('static/upload/name.png')
+    with open(path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+        return path
+
+def upload_file(request):
+    if request.method == 'POST':
+        print request.FILES
+        url = handle_uploaded_file(request.FILES['file'])
+        print url
+        return HttpResponse(url)
+    return HttpResponse('ok')
 #---------------------------下面是接口---------------------------
 from django.contrib.auth.models import User
 from rest_framework import permissions
@@ -57,8 +108,9 @@ class SnippetViewSet(viewsets.ModelViewSet):
     """
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+    #                       IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     @detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
@@ -80,3 +132,16 @@ class ZixunViewSet(viewsets.ModelViewSet):
     """
     queryset = Zixun.objects.all()
     serializer_class = ZixunSerializer
+
+#---------------------------picture
+from snippets.serializers import PictureSerializer
+from snippets.models import Picture
+class PictureViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer

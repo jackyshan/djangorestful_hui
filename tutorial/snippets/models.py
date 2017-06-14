@@ -53,3 +53,16 @@ class Zixun(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+class Picture(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    category = models.TextField(default='')
+    isComment = models.BooleanField(default=False)
+    publish_time = models.TextField(default='')
+    content = models.TextField(default='')
+    picture_list = models.TextField(default='')
+
+    class Meta:
+        ordering = ('created',)
+        

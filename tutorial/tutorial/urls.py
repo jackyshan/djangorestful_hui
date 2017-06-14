@@ -16,22 +16,29 @@ Including another URLconf
 from django.conf.urls import url, include
 from snippets import views
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'snippets', views.SnippetViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'zixuns', views.ZixunViewSet)
+router.register(r'pictures', views.PictureViewSet)
 
 # The API URLs are now determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
+    url(r'^upload_file$', views.upload_file),
+    url(r'^login_out$', views.logout_view),
+    url(r'^login$', views.login_index),
     url(r'^index$', views.index),
     url(r'^picture_add$', views.picture_add, name='picture_add'),
+    url(r'^picture_show$', views.picture_show, name='picture_show'),
     url(r'^picture_list$', views.picture_list, name='picture_list'),
     url(r'^artical_list$', views.artical_list, name='artical_list'),
     url(r'^article_add$', views.article_add, name='article_add'),
     url(r'^welcome$', views.welcome, name='welcome'),
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', obtain_jwt_token),
 ]

@@ -51,7 +51,7 @@
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
 						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="/login_out" onClick="">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -209,6 +209,14 @@ $(function(){
 		}
 	});*/
 });
+//退出登录
+function login_out() {
+	$.get("/login_out",
+	function(data,status) {
+        // alert("数据: \n" + data + "\n状态: " + status);
+    });
+}
+
 /*个人信息*/
 function myselfinfo(){
 	layer.open({

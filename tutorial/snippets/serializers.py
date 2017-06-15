@@ -19,7 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'snippets')
+        fields = ('url', 'username', 'snippets', 'password')
 
 
 class ZixunSerializer(serializers.HyperlinkedModelSerializer):

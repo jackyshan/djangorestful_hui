@@ -75,6 +75,18 @@ def upload_file(request):
         print url
         return HttpResponse(url)
     return HttpResponse('ok')
+
+#用户注册
+def register(request):
+    if request.method == 'GET':
+        return HttpResponse('ok')
+    username = request.POST['username']
+    password = request.POST['password']
+    email = request.POST['email']
+    user = User.objects.create_user(username=username, email=password, password=password)
+    user.save()
+    return HttpResponse('register succ')
+
 #---------------------------下面是接口---------------------------
 from django.contrib.auth.models import User
 from rest_framework import permissions
@@ -87,6 +99,21 @@ from snippets.permissions import IsOwnerOrReadOnly
 from snippets.serializers import SnippetSerializer, UserSerializer
 #---------------------------user
 from rest_framework import viewsets
+from rest_framework import mixins
+
+# class UserViewSet(mixins.CreateModelMixin,
+#                                 mixins.ListModelMixin,
+#                                 mixins.RetrieveModelMixin,
+#                                 viewsets.GenericViewSet):
+#     """
+#     Example empty viewset demonstrating the standard
+#     actions that will be handled by a router class.
+
+#     If you're using format suffixes, make sure to also include
+#     the `format=None` keyword argument for each action.
+#     """
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -94,6 +121,13 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+# class UserViewSet(viewsets.ModelViewSet):
+#     """
+#     This viewset automatically provides `list` and `detail` actions.
+#     """
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 
 #---------------------------snippet

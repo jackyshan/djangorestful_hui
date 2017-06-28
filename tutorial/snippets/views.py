@@ -10,6 +10,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 import os,time
 
+#ss管理
+@login_required(login_url='/login')
+def ss(request):
+    print request.user.username
+    queryset = SS.objects.all()
+    return render(request, 'ss-list.html', {'sss': queryset})
+    # if request.user.username == 'admin':
+    #     queryset = SS.objects.all()
+    #     return render(request, 'ss-list.html', {'sss': queryset}) 
+    # return render(request, 'ss-list.html', {'sss': []}) 
+def ss_add(request):
+    return render(request, 'ss-add.html')
+
 @login_required(login_url='/login')
 def index(request):
     return render(request, 'index.html')
@@ -179,3 +192,17 @@ class PictureViewSet(viewsets.ModelViewSet):
     """
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
+
+#---------------------------ss
+from snippets.serializers import SSSerializer
+from snippets.models import SS
+class SSViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    permission_classes = (permissions.IsAdminUser,)
+    queryset = SS.objects.all()
+    serializer_class = SSSerializer

@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.contrib import admin
 from snippets import views
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
@@ -24,10 +25,13 @@ router.register(r'snippets', views.SnippetViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'zixuns', views.ZixunViewSet)
 router.register(r'pictures', views.PictureViewSet)
+router.register(r'sss', views.SSViewSet)
 
 # The API URLs are now determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
+    url(r'^ss_list$', views.ss),
+    url(r'^ss_add$', views.ss_add, name='ss_add'),
     url(r'^register$', views.register),
     url(r'^upload_file$', views.upload_file),
     url(r'^login_out$', views.logout_view),
@@ -42,4 +46,5 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^admin/', include(admin.site.urls)),
 ]

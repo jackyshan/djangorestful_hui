@@ -16,7 +16,6 @@ LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
 STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 
-
 class Snippet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
@@ -62,6 +61,24 @@ class Picture(models.Model):
     publish_time = models.TextField(default='')
     content = models.TextField(default='')
     picture_list = models.TextField(default='')
+
+    class Meta:
+        ordering = ('created',)
+        
+class SS(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100, blank=True, default='')
+    qq = models.TextField(default='')
+    wechat = models.TextField(default='')
+    alipay = models.TextField(default='')
+    buy_time = models.TextField(default='')
+    end_time = models.TextField(default='')
+    ss_ip = models.TextField(default='')
+    ss_port = models.TextField(default='')
+    ss_passwd = models.TextField(default='')
+    ss_encry = models.TextField(default='aes-256-cfb')
+    isExpired = models.BooleanField(default=False)
+    note = models.TextField(default='')
 
     class Meta:
         ordering = ('created',)

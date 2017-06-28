@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
-from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES, Zixun, Picture
+from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES, Zixun, Picture, SS
 from django.contrib.auth.models import User
 
 class SnippetSerializer(serializers.HyperlinkedModelSerializer):
@@ -32,3 +32,7 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
         model = Picture
         fields = ('id', 'title', 'category', 'isComment', 'publish_time', 'content', 'picture_list')
 
+class SSSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SS
+        fields = ('id', 'name', 'qq', 'wechat', 'alipay', 'buy_time', 'end_time', 'ss_ip', 'ss_port', 'ss_passwd', 'ss_encry', 'isExpired', 'note')

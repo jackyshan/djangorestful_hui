@@ -26,3 +26,7 @@ http://127.0.0.1:8000/api/
 
 退出虚拟环境
 deactivate
+
+![](test1.png)
+
+![](test2.png)

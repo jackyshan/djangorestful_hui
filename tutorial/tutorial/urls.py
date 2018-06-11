@@ -32,6 +32,7 @@ router.register(r'sss', views.SSViewSet)
 urlpatterns = [
     url(r'^ss_list$', views.ss),
     url(r'^ss_add$', views.ss_add, name='ss_add'),
+    url(r'^ss_edit/', views.ss_edit, name='ss_edit'),
     url(r'^register$', views.register),
     url(r'^upload_file$', views.upload_file),
     url(r'^login_out$', views.logout_view),

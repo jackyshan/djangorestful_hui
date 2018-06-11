@@ -22,6 +22,21 @@ def ss(request):
     # return render(request, 'ss-list.html', {'sss': []}) 
 def ss_add(request):
     return render(request, 'ss-add.html')
+def ss_edit(request):
+    print '--------'
+    if request.method == 'POST':
+        print 'post----->>>'
+        return HttpResponse('ok')
+
+    if request.GET:
+        print request.GET
+        sid = request.GET.get('sid')
+        if sid is not None: 
+            sss = SS.objects.filter(id = sid)
+            print sss[0].isExpired
+            return render(request, 'ss-edit.html', {'ss': sss[0]})
+        return HttpResponse('ok')
+    return HttpResponse('ok')
 
 @login_required(login_url='/login')
 def index(request):

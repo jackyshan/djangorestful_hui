@@ -8,4 +8,4 @@ Pygments==2.2.0
 PyJWT==1.5.0
 pytz==2017.2
 requests==2.17.3
-urllib3==1.21.1
+urllib3==1.26.5
